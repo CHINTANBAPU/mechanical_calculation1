@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Industrial Analytics - Smart Mechanical Calculation Tool</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'sans': ['Inter', 'ui-sans-serif', 'system-ui']
+                    },
+                    colors: {
+                        primary: {
+                            50: '#EFF6FF',
+                            500: '#2563EB',
+                            600: '#2563EB',
+                            700: '#1D4ED8'
+                        }
+                    }
+                }
+            }
+        };
+    </script>
+</head>
+<body class="bg-gray-50 font-sans">
+    <!-- @COMPONENT: Header -->
+    <header class="bg-white border-b border-gray-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <i class="fas fa-calculator text-primary-600 text-2xl mr-3"></i>
+                    <h1 class="text-xl font-semibold text-gray-900">Industrial Analytics</h1>
+                    <span class="ml-2 text-sm text-gray-500 hidden sm:block">Smart Mechanical Calculation Tool</span>
+                </div>
+                <nav class="hidden md:flex space-x-6">
+                    <a href="#" class="text-gray-600 hover:text-primary-600 px-3 py-2 rounded-md text-sm font-medium">Calculations</a>
+                    <a href="#" class="text-gray-600 hover:text-primary-600 px-3 py-2 rounded-md text-sm font-medium">Documentation</a>
+                    <a href="#" class="text-gray-600 hover:text-primary-600 px-3 py-2 rounded-md text-sm font-medium">Examples</a>
+                    <a href="#" class="text-gray-600 hover:text-primary-600 px-3 py-2 rounded-md text-sm font-medium">Help</a>
+                </nav>
+                <div class="flex items-center space-x-3">
+                    <button class="bg-primary-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-primary-700 transition-colors">
+                        <i class="fas fa-download mr-2"></i>Export Results
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- @END_COMPONENT: Header -->
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+            
+            <!-- @COMPONENT: Sidebar Navigation -->
+            <div class="lg:col-span-1">
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 sticky top-24">
+                    <h2 class="text-lg font-semibold text-gray-900 mb-4">Calculation Categories</h2>
+                    <nav class="space-y-2">
+                        <button class="w-full text-left px-4 py-3 rounded-lg bg-primary-50 text-primary-700 font-medium border border-primary-200" data-category="stress">
+                            <i class="fas fa-compress-arrows-alt mr-3"></i>Stress Analysis
+                        </button>
+                        <button class="w-full text-left px-4 py-3 rounded-lg hover:bg-gray-50 text-gray-700 font-medium" data-category="beam">
+                            <i class="fas fa-ruler-horizontal mr-3"></i>Beam Deflection
+                        </button>
+                        <button class="w-full text-left px-4 py-3 rounded-lg hover:bg-gray-50 text-gray-700 font-medium" data-category="torsion">
+                            <i class="fas fa-sync-alt mr-3"></i>Torsion Analysis
+                        </button>
+                        <button class="w-full text-left px-4 py-3 rounded-lg hover:bg-gray-50 text-gray-700 font-medium" data-category="column">
+                            <i class="fas fa-arrows-alt-v mr-3"></i>Column Buckling
+                        </button>
+                        <button class="w-full text-left px-4 py-3 rounded-lg hover:bg-gray-50 text-gray-700 font-medium" data-category="fatigue">
+                            <i class="fas fa-wave-square mr-3"></i>Fatigue Analysis
+                        </button>
+                        <button class="w-full text-left px-4 py-3 rounded-lg hover:bg-gray-50 text-gray-700 font-medium" data-category="thermal">
+                            <i class="fas fa-thermometer-half mr-3"></i>Thermal Stress
+                        </button>
+                    </nav>
+                    
+                    <div class="mt-8 p-4 bg-blue-50 rounded-lg">
+                        <h3 class="text-sm font-semibold text-blue-900 mb-2">Quick Help</h3>
+                        <p class="text-xs text-blue-700 mb-3">Need assistance with calculations? Our help system provides step-by-step guidance.</p>
+                        <button class="text-blue-600 text-xs font-medium hover:text-blue-800">
+                            <i class="fas fa-question-circle mr-1"></i>View Documentation
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <!-- @END_COMPONENT: Sidebar Navigation -->
+
+            <!-- @COMPONENT: Main Content Area -->
+            <div class="lg:col-span-2">
+                
+                <!-- @COMPONENT: Calculation Header -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-8">
+                    <div class="flex items-center justify-between mb-4">
+                        <div>
+                            <h2 class="text-2xl font-bold text-gray-900">Stress Analysis Calculator</h2>
+                            <p class="text-gray-600 mt-1">Calculate normal and shear stress for various loading conditions</p>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <button class="p-2 text-gray-400 hover:text-gray-600 rounded-lg hover:bg-gray-50" title="Help">
+                                <i class="fas fa-question-circle"></i>
+                            </button>
+                            <button class="p-2 text-gray-400 hover:text-gray-600 rounded-lg hover:bg-gray-50" title="Reset">
+                                <i class="fas fa-redo-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Formula Display -->
+                    <div class="bg-gray-50 rounded-lg p-4">
+                        <h3 class="text-sm font-semibold text-gray-700 mb-2">Formula:</h3>
+                        <div class="text-lg font-mono text-gray-800">
+                            σ = F / A
+                        </div>
+                        <p class="text-sm text-gray-600 mt-1">Where σ = stress, F = force, A = cross-sectional area</p>
+                    </div>
+                </div>
+                <!-- @END_COMPONENT: Calculation Header -->
+
+                <!-- @COMPONENT: Input Form -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-8">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-6">Input Parameters</h3>
+                    
+                    <form class="space-y-6">
+                        <!-- Material Selection -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Material Type</label>
+                                <select class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500" data-bind="material">
+                                    <option>Steel (ASTM A36)</option>
+                                    <option>Aluminum 6061-T6</option>
+                                    <option>Carbon Steel</option>
+                                    <option>Stainless Steel 304</option>
+                                    <option>Custom Material</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Loading Type</label>
+                                <select class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500" data-bind="loadingType">
+                                    <option>Axial Tension</option>
+                                    <option>Axial Compression</option>
+                                    <option>Pure Shear</option>
+                                    <option>Combined Loading</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Geometry Inputs -->
+                        <div>
+                            <h4 class="text-md font-medium text-gray-800 mb-4">Geometry</h4>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                                        Width (mm)
+                                        <span class="text-red-500">*</span>
+                                    </label>
+                                    <input type="number" placeholder="25.0" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500" data-bind="width" required>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                                        Height (mm)
+                                        <span class="text-red-500">*</span>
+                                    </label>
+                                    <input type="number" placeholder="50.0" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500" data-bind="height" required>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                                        Thickness (mm)
+                                        <span class="text-red-500">*</span>
+                                    </label>
+                                    <input type="number" placeholder="5.0" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500" data-bind="thickness" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Loading Inputs -->
+                        <div>
+                            <h4 class="text-md font-medium text-gray-800 mb-4">Loading Conditions</h4>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                                        Applied Force (N)
+                                        <span class="text-red-500">*</span>
+                                    </label>
+                                    <input type="number" placeholder="10000" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500" data-bind="force" required>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Safety Factor</label>
+                                    <input type="number" placeholder="2.0" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500" data-bind="safetyFactor">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex space-x-4">
+                            <button type="submit" class="flex-1 bg-primary-600 text-white py-3 px-6 rounded-lg font-medium hover:bg-primary-700 transition-colors" data-event="click:calculate">
+                                <i class="fas fa-calculator mr-2"></i>Calculate
+                            </button>
+                            <button type="button" class="px-6 py-3 border border-gray-300 rounded-lg font-medium text-gray-700 hover:bg-gray-50 transition-colors" data-event="click:reset">
+                                Clear All
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                <!-- @END_COMPONENT: Input Form -->
+
+                <!-- @COMPONENT: Calculation Steps -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-6">Step-by-Step Calculation</h3>
+                    
+                    <div class="space-y-4">
+                        <div class="flex items-start space-x-4 p-4 bg-gray-50 rounded-lg">
+                            <div class="bg-primary-600 text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold flex-shrink-0">1</div>
+                            <div class="flex-1">
+                                <h4 class="font-medium text-gray-800 mb-1">Calculate Cross-Sectional Area</h4>
+                                <p class="text-gray-600 text-sm mb-2">A = width × thickness</p>
+                                <div class="font-mono text-sm bg-white p-2 rounded border" data-mock="true">A = 25.0 × 5.0 = 125 mm²</div>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start space-x-4 p-4 bg-gray-50 rounded-lg">
+                            <div class="bg-primary-600 text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold flex-shrink-0">2</div>
+                            <div class="flex-1">
+                                <h4 class="font-medium text-gray-800 mb-1">Apply Stress Formula</h4>
+                                <p class="text-gray-600 text-sm mb-2">σ = F / A</p>
+                                <div class="font-mono text-sm bg-white p-2 rounded border" data-mock="true">σ = 10,000 N / 125 mm² = 80 MPa</div>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start space-x-4 p-4 bg-gray-50 rounded-lg">
+                            <div class="bg-primary-600 text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold flex-shrink-0">3</div>
+                            <div class="flex-1">
+                                <h4 class="font-medium text-gray-800 mb-1">Safety Check</h4>
+                                <p class="text-gray-600 text-sm mb-2">Compare with material yield strength</p>
+                                <div class="font-mono text-sm bg-white p-2 rounded border" data-mock="true">σ_yield = 250 MPa, σ_actual = 80 MPa ✓ Safe</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- @END_COMPONENT: Calculation Steps -->
+            </div>
+            <!-- @END_COMPONENT: Main Content Area -->
+
+            <!-- @COMPONENT: Results Panel -->
+            <div class="lg:col-span-1">
+                <div class="space-y-6 sticky top-24">
+                    
+                    <!-- @COMPONENT: Results Summary -->
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-4">Results Summary</h3>
+                        
+                        <div class="space-y-4">
+                            <div class="flex justify-between items-center p-3 bg-green-50 rounded-lg border border-green-200">
+                                <span class="text-sm font-medium text-gray-700">Normal Stress</span>
+                                <span class="font-bold text-green-700" data-bind="normalStress">80.0 MPa</span>
+                            </div>
+                            
+                            <div class="flex justify-between items-center p-3 bg-blue-50 rounded-lg border border-blue-200">
+                                <span class="text-sm font-medium text-gray-700">Safety Factor</span>
+                                <span class="font-bold text-blue-700" data-bind="actualSafetyFactor">3.12</span>
+                            </div>
+                            
+                            <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg border border-gray-200">
+                                <span class="text-sm font-medium text-gray-700">Cross-Sectional Area</span>
+                                <span class="font-bold text-gray-700" data-bind="crossSectionalArea">125 mm²</span>
+                            </div>
+                            
+                            <!-- Status Indicator -->
+                            <div class="p-3 bg-green-50 rounded-lg border border-green-200">
+                                <div class="flex items-center">
+                                    <i class="fas fa-check-circle text-green-600 mr-2"></i>
+                                    <span class="text-sm font-medium text-green-800">Design is Safe</span>
+                                </div>
+                                <p class="text-xs text-green-700 mt-1">Stress is within acceptable limits</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- @END_COMPONENT: Results Summary -->
+
+                    <!-- @COMPONENT: Material Properties -->
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-4">Material Properties</h3>
+                        
+                        <div class="space-y-3">
+                            <div class="flex justify-between text-sm">
+                                <span class="text-gray-600">Yield Strength</span>
+                                <span class="font-medium text-gray-800" data-mock="true">250 MPa</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-gray-600">Ultimate Strength</span>
+                                <span class="font-medium text-gray-800" data-mock="true">400 MPa</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-gray-600">Elastic Modulus</span>
+                                <span class="font-medium text-gray-800" data-mock="true">200 GPa</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-gray-600">Poisson's Ratio</span>
+                                <span class="font-medium text-gray-800" data-mock="true">0.30</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- @END_COMPONENT: Material Properties -->
+
+                    <!-- @COMPONENT: Actions Panel -->
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-4">Actions</h3>
+                        
+                        <div class="space-y-3">
+                            <button class="w-full px-4 py-2 bg-primary-600 text-white rounded-lg text-sm font-medium hover:bg-primary-700 transition-colors" data-event="click:exportPDF">
+                                <i class="fas fa-file-pdf mr-2"></i>Export as PDF
+                            </button>
+                            <button class="w-full px-4 py-2 border border-gray-300 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-50 transition-colors" data-event="click:saveProject">
+                                <i class="fas fa-save mr-2"></i>Save Project
+                            </button>
+                            <button class="w-full px-4 py-2 border border-gray-300 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-50 transition-colors" data-event="click:shareResults">
+                                <i class="fas fa-share-alt mr-2"></i>Share Results
+                            </button>
+                        </div>
+                    </div>
+                    <!-- @END_COMPONENT: Actions Panel -->
+
+                    <!-- @COMPONENT: Recent Calculations -->
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-4">Recent Calculations</h3>
+                        
+                        <div class="space-y-2">
+                            <!-- @MAP: recentCalculations.map(calc => ( -->
+                            <div class="flex items-center justify-between p-2 hover:bg-gray-50 rounded-lg cursor-pointer" data-mock="true">
+                                <div>
+                                    <div class="text-sm font-medium text-gray-800">Beam Analysis #1</div>
+                                    <div class="text-xs text-gray-500">2 hours ago</div>
+                                </div>
+                                <i class="fas fa-chevron-right text-gray-400"></i>
+                            </div>
+                            
+                            <div class="flex items-center justify-between p-2 hover:bg-gray-50 rounded-lg cursor-pointer" data-mock="true">
+                                <div>
+                                    <div class="text-sm font-medium text-gray-800">Torsion Analysis</div>
+                                    <div class="text-xs text-gray-500">5 hours ago</div>
+                                </div>
+                                <i class="fas fa-chevron-right text-gray-400"></i>
+                            </div>
+                            
+                            <div class="flex items-center justify-between p-2 hover:bg-gray-50 rounded-lg cursor-pointer" data-mock="true">
+                                <div>
+                                    <div class="text-sm font-medium text-gray-800">Column Buckling</div>
+                                    <div class="text-xs text-gray-500">1 day ago</div>
+                                </div>
+                                <i class="fas fa-chevron-right text-gray-400"></i>
+                            </div>
+                            <!-- @END_MAP )) -->
+                        </div>
+                    </div>
+                    <!-- @END_COMPONENT: Recent Calculations -->
+                </div>
+            </div>
+            <!-- @END_COMPONENT: Results Panel -->
+        </div>
+    </div>
+
+    <!-- @COMPONENT: Educational Modal -->
+    <div id="helpModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50" data-mock="true">
+        <div class="bg-white rounded-xl shadow-xl max-w-2xl w-full m-4 max-h-96 overflow-hidden">
+            <div class="p-6 border-b border-gray-200">
+                <div class="flex items-center justify-between">
+                    <h2 class="text-xl font-semibold text-gray-900">Stress Analysis Help</h2>
+                    <button class="text-gray-400 hover:text-gray-600">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="p-6 overflow-y-auto">
+                <div class="space-y-4">
+                    <div>
+                        <h3 class="font-medium text-gray-800 mb-2">Understanding Stress</h3>
+                        <p class="text-gray-600 text-sm">Stress is the internal force per unit area within a material. It's calculated as σ = F/A, where F is the applied force and A is the cross-sectional area.</p>
+                    </div>
+                    <div>
+                        <h3 class="font-medium text-gray-800 mb-2">Safety Factors</h3>
+                        <p class="text-gray-600 text-sm">Safety factors account for uncertainties in loading, material properties, and design. A factor of 2-4 is typical for static loading conditions.</p>
+                    </div>
+                    <div>
+                        <h3 class="font-medium text-gray-800 mb-2">Material Selection</h3>
+                        <p class="text-gray-600 text-sm">Choose materials based on strength requirements, environmental conditions, and cost considerations. Steel offers high strength, while aluminum provides good strength-to-weight ratio.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- @END_COMPONENT: Educational Modal -->
+
+    <script>
+        (function() {
+            // TODO: Implement business logic, API calls, and state management
+            // TODO: Add form validation and error handling
+            // TODO: Implement calculation engine for various mechanical formulas
+            // TODO: Add export functionality for PDF reports
+            // TODO: Implement save/load project functionality
+            
+            // Basic UI interactions for demonstration
+            document.addEventListener('DOMContentLoaded', function() {
+                // Category switching simulation
+                const categoryButtons = document.querySelectorAll('[data-category]');
+                categoryButtons.forEach(button => {
+                    button.addEventListener('click', function() {
+                        // Remove active state from all buttons
+                        categoryButtons.forEach(btn => {
+                            btn.className = btn.className.replace('bg-primary-50 text-primary-700 border-primary-200', 'hover:bg-gray-50 text-gray-700');
+                        });
+                        
+                        // Add active state to clicked button
+                        this.className = this.className.replace('hover:bg-gray-50 text-gray-700', 'bg-primary-50 text-primary-700 border border-primary-200');
+                        
+                        // TODO: Load different calculation modules based on category
+                    });
+                });
+                
+                // Form submission simulation
+                const calculateButton = document.querySelector('[data-event="click:calculate"]');
+                if (calculateButton) {
+                    calculateButton.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        // TODO: Implement calculation logic
+                        // TODO: Validate inputs
+                        // TODO: Update results panel
+                        console.log('Calculate button clicked - implement calculation logic');
+                    });
+                }
+            });
+        })();
+    </script>
+</body>
+</html>

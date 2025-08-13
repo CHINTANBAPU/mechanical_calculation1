@@ -1,0 +1,545 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Industrial Analytics - Smart Mechanical Calculation Tool</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'sans': ['Inter', 'system-ui', 'sans-serif'],
+                        'mono': ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        primary: {
+                            50: '#eff6ff',
+                            500: '#2563eb',
+                            600: '#1d4ed8',
+                            700: '#1e40af',
+                        },
+                        success: {
+                            50: '#ecfdf5',
+                            500: '#059669',
+                            600: '#047857',
+                        }
+                    }
+                }
+            }
+        };
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-gray-50 font-sans">
+    <!-- @COMPONENT: NavigationHeader -->
+    <nav class="bg-white border-b border-gray-200 fixed top-0 left-0 right-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <i class="fas fa-calculator text-primary-500 text-2xl mr-3"></i>
+                        <span class="text-xl font-bold text-gray-900">Industrial Analytics</span>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button class="text-gray-500 hover:text-gray-700 p-2">
+                        <i class="fas fa-bell text-lg"></i>
+                    </button>
+                    <div class="flex items-center space-x-3">
+                        <!-- User profile with mock data -->
+                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=32&h=32" 
+                             alt="User profile" class="w-8 h-8 rounded-full" data-mock="true">
+                        <span class="text-sm font-medium text-gray-700" data-bind="user.name">Dr. Smith</span>
+                        <button class="text-gray-500 hover:text-gray-700">
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!-- @END_COMPONENT: NavigationHeader -->
+
+    <div class="flex h-screen pt-16">
+        <!-- @COMPONENT: Sidebar -->
+        <aside class="w-64 bg-white border-r border-gray-200 overflow-y-auto">
+            <div class="p-6">
+                <nav class="space-y-2">
+                    <a href="#" class="bg-primary-50 text-primary-700 group flex items-center px-3 py-2 text-sm font-medium rounded-lg">
+                        <i class="fas fa-tachometer-alt mr-3 text-primary-500"></i>
+                        Dashboard
+                    </a>
+                    <a href="#" class="text-gray-700 hover:bg-gray-50 group flex items-center px-3 py-2 text-sm font-medium rounded-lg">
+                        <i class="fas fa-calculator mr-3 text-gray-400"></i>
+                        New Calculation
+                    </a>
+                    <a href="#" class="text-gray-700 hover:bg-gray-50 group flex items-center px-3 py-2 text-sm font-medium rounded-lg">
+                        <i class="fas fa-history mr-3 text-gray-400"></i>
+                        History
+                    </a>
+                    <a href="#" class="text-gray-700 hover:bg-gray-50 group flex items-center px-3 py-2 text-sm font-medium rounded-lg">
+                        <i class="fas fa-bookmark mr-3 text-gray-400"></i>
+                        Saved Calculations
+                    </a>
+                </nav>
+
+                <div class="mt-8">
+                    <h3 class="px-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Calculation Types</h3>
+                    <div class="mt-3 space-y-1">
+                        <a href="#" class="text-gray-700 hover:bg-gray-50 group flex items-center px-3 py-2 text-sm font-medium rounded-lg">
+                            <i class="fas fa-weight-hanging mr-3 text-gray-400 text-xs"></i>
+                            Stress Analysis
+                        </a>
+                        <a href="#" class="text-gray-700 hover:bg-gray-50 group flex items-center px-3 py-2 text-sm font-medium rounded-lg">
+                            <i class="fas fa-arrows-alt-h mr-3 text-gray-400 text-xs"></i>
+                            Beam Deflection
+                        </a>
+                        <a href="#" class="text-gray-700 hover:bg-gray-50 group flex items-center px-3 py-2 text-sm font-medium rounded-lg">
+                            <i class="fas fa-expand-arrows-alt mr-3 text-gray-400 text-xs"></i>
+                            Strain Calculations
+                        </a>
+                        <a href="#" class="text-gray-700 hover:bg-gray-50 group flex items-center px-3 py-2 text-sm font-medium rounded-lg">
+                            <i class="fas fa-cog mr-3 text-gray-400 text-xs"></i>
+                            Material Properties
+                        </a>
+                    </div>
+                </div>
+
+                <div class="mt-8">
+                    <h3 class="px-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Resources</h3>
+                    <div class="mt-3 space-y-1">
+                        <a href="#" class="text-gray-700 hover:bg-gray-50 group flex items-center px-3 py-2 text-sm font-medium rounded-lg">
+                            <i class="fas fa-book mr-3 text-gray-400 text-xs"></i>
+                            Documentation
+                        </a>
+                        <a href="#" class="text-gray-700 hover:bg-gray-50 group flex items-center px-3 py-2 text-sm font-medium rounded-lg">
+                            <i class="fas fa-question-circle mr-3 text-gray-400 text-xs"></i>
+                            Help & Support
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </aside>
+        <!-- @END_COMPONENT: Sidebar -->
+
+        <!-- @COMPONENT: MainContent -->
+        <main class="flex-1 overflow-y-auto">
+            <div class="p-8">
+                <!-- Dashboard Header -->
+                <div class="mb-8">
+                    <div class="sm:flex sm:items-center sm:justify-between">
+                        <div>
+                            <h1 class="text-3xl font-bold text-gray-900">Dashboard</h1>
+                            <p class="mt-2 text-gray-600">Welcome back! Here's an overview of your mechanical calculations.</p>
+                        </div>
+                        <div class="mt-4 sm:mt-0">
+                            <button class="bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded-lg font-medium text-sm flex items-center" data-event="click:createNewCalculation">
+                                <i class="fas fa-plus mr-2"></i>
+                                New Calculation
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stats Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0">
+                                <div class="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center">
+                                    <i class="fas fa-calculator text-primary-600 text-xl"></i>
+                                </div>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-sm font-medium text-gray-600">Total Calculations</p>
+                                <p class="text-2xl font-bold text-gray-900" data-bind="stats.totalCalculations">247</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0">
+                                <div class="w-12 h-12 bg-success-100 rounded-lg flex items-center justify-center">
+                                    <i class="fas fa-bookmark text-success-600 text-xl"></i>
+                                </div>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-sm font-medium text-gray-600">Saved Projects</p>
+                                <p class="text-2xl font-bold text-gray-900" data-bind="stats.savedProjects">18</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0">
+                                <div class="w-12 h-12 bg-amber-100 rounded-lg flex items-center justify-center">
+                                    <i class="fas fa-clock text-amber-600 text-xl"></i>
+                                </div>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-sm font-medium text-gray-600">This Week</p>
+                                <p class="text-2xl font-bold text-gray-900" data-bind="stats.thisWeek">32</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0">
+                                <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
+                                    <i class="fas fa-users text-purple-600 text-xl"></i>
+                                </div>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-sm font-medium text-gray-600">Shared With</p>
+                                <p class="text-2xl font-bold text-gray-900" data-bind="stats.sharedWith">12</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <!-- @COMPONENT: QuickCalculation -->
+                    <div class="lg:col-span-2">
+                        <div class="bg-white rounded-xl shadow-sm border border-gray-200">
+                            <div class="p-6 border-b border-gray-200">
+                                <h2 class="text-xl font-semibold text-gray-900">Quick Calculation</h2>
+                                <p class="text-gray-600 text-sm mt-1">Perform a quick stress analysis calculation</p>
+                            </div>
+                            <div class="p-6">
+                                <form class="space-y-6" data-implementation="Form should validate inputs and perform calculations">
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 mb-2">Material Type</label>
+                                            <select class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
+                                                <option>Steel (A36)</option>
+                                                <option>Aluminum (6061-T6)</option>
+                                                <option>Stainless Steel (304)</option>
+                                                <option>Custom Material</option>
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 mb-2">Load Type</label>
+                                            <select class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
+                                                <option>Tensile Load</option>
+                                                <option>Compressive Load</option>
+                                                <option>Bending Moment</option>
+                                                <option>Shear Force</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 mb-2">Force (N)</label>
+                                            <input type="number" placeholder="1000" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500" data-validation="required|numeric">
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 mb-2">Area (mm²)</label>
+                                            <input type="number" placeholder="100" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500" data-validation="required|numeric">
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 mb-2">Length (mm)</label>
+                                            <input type="number" placeholder="500" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500" data-validation="required|numeric">
+                                        </div>
+                                    </div>
+
+                                    <div class="flex space-x-4">
+                                        <button type="button" class="bg-primary-600 hover:bg-primary-700 text-white px-6 py-2 rounded-lg font-medium flex items-center" data-event="click:calculateStress">
+                                            <i class="fas fa-calculator mr-2"></i>
+                                            Calculate
+                                        </button>
+                                        <button type="button" class="border border-gray-300 text-gray-700 hover:bg-gray-50 px-6 py-2 rounded-lg font-medium" data-event="click:resetForm">
+                                            Reset
+                                        </button>
+                                    </div>
+                                </form>
+
+                                <!-- Results Section -->
+                                <div class="mt-8 p-4 bg-gray-50 rounded-lg" data-implementation="Show/hide based on calculation state">
+                                    <h3 class="text-lg font-semibold text-gray-900 mb-4">Calculation Results</h3>
+                                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                        <div class="bg-white p-4 rounded-lg border">
+                                            <p class="text-sm text-gray-600">Stress (σ)</p>
+                                            <p class="text-2xl font-bold text-gray-900 font-mono" data-bind="results.stress">10.0 MPa</p>
+                                        </div>
+                                        <div class="bg-white p-4 rounded-lg border">
+                                            <p class="text-sm text-gray-600">Safety Factor</p>
+                                            <p class="text-2xl font-bold text-success-600 font-mono" data-bind="results.safetyFactor">25.0</p>
+                                        </div>
+                                        <div class="bg-white p-4 rounded-lg border">
+                                            <p class="text-sm text-gray-600">Status</p>
+                                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-success-100 text-success-800" data-bind="results.status">
+                                                <i class="fas fa-check-circle mr-1"></i>
+                                                Safe
+                                            </span>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Detailed Breakdown -->
+                                    <div class="mt-4">
+                                        <h4 class="font-medium text-gray-900 mb-2">Calculation Steps</h4>
+                                        <div class="bg-white p-4 rounded border font-mono text-sm">
+                                            <p class="text-gray-700">σ = F / A</p>
+                                            <p class="text-gray-700">σ = 1000 N / 100 mm²</p>
+                                            <p class="text-gray-900 font-semibold">σ = 10.0 MPa</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- @END_COMPONENT: QuickCalculation -->
+
+                    <!-- @COMPONENT: RecentActivity -->
+                    <div>
+                        <div class="bg-white rounded-xl shadow-sm border border-gray-200 mb-6">
+                            <div class="p-6 border-b border-gray-200">
+                                <h2 class="text-xl font-semibold text-gray-900">Recent Calculations</h2>
+                            </div>
+                            <div class="p-6">
+                                <!-- @MAP: recentCalculations.map(calc => ( -->
+                                <div class="space-y-4" data-mock="true">
+                                    <div class="flex items-start space-x-3">
+                                        <div class="flex-shrink-0">
+                                            <div class="w-8 h-8 bg-primary-100 rounded-lg flex items-center justify-center">
+                                                <i class="fas fa-weight-hanging text-primary-600 text-xs"></i>
+                                            </div>
+                                        </div>
+                                        <div class="flex-1 min-w-0">
+                                            <p class="text-sm font-medium text-gray-900">Beam Stress Analysis</p>
+                                            <p class="text-xs text-gray-500">Steel beam, 2000mm length</p>
+                                            <p class="text-xs text-gray-400">2 hours ago</p>
+                                        </div>
+                                        <button class="text-gray-400 hover:text-gray-600">
+                                            <i class="fas fa-ellipsis-h"></i>
+                                        </button>
+                                    </div>
+                                    <div class="flex items-start space-x-3">
+                                        <div class="flex-shrink-0">
+                                            <div class="w-8 h-8 bg-success-100 rounded-lg flex items-center justify-center">
+                                                <i class="fas fa-arrows-alt-h text-success-600 text-xs"></i>
+                                            </div>
+                                        </div>
+                                        <div class="flex-1 min-w-0">
+                                            <p class="text-sm font-medium text-gray-900">Deflection Calculation</p>
+                                            <p class="text-xs text-gray-500">Aluminum cantilever beam</p>
+                                            <p class="text-xs text-gray-400">Yesterday</p>
+                                        </div>
+                                        <button class="text-gray-400 hover:text-gray-600">
+                                            <i class="fas fa-ellipsis-h"></i>
+                                        </button>
+                                    </div>
+                                    <div class="flex items-start space-x-3">
+                                        <div class="flex-shrink-0">
+                                            <div class="w-8 h-8 bg-amber-100 rounded-lg flex items-center justify-center">
+                                                <i class="fas fa-expand-arrows-alt text-amber-600 text-xs"></i>
+                                            </div>
+                                        </div>
+                                        <div class="flex-1 min-w-0">
+                                            <p class="text-sm font-medium text-gray-900">Strain Analysis</p>
+                                            <p class="text-xs text-gray-500">Material property study</p>
+                                            <p class="text-xs text-gray-400">3 days ago</p>
+                                        </div>
+                                        <button class="text-gray-400 hover:text-gray-600">
+                                            <i class="fas fa-ellipsis-h"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <!-- @END_MAP )) -->
+                                
+                                <div class="mt-6">
+                                    <a href="#" class="text-primary-600 hover:text-primary-700 text-sm font-medium">View all calculations →</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Learning Resources -->
+                        <div class="bg-white rounded-xl shadow-sm border border-gray-200">
+                            <div class="p-6 border-b border-gray-200">
+                                <h2 class="text-xl font-semibold text-gray-900">Learning Resources</h2>
+                            </div>
+                            <div class="p-6">
+                                <div class="space-y-4">
+                                    <a href="#" class="block p-3 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
+                                        <div class="flex items-center space-x-3">
+                                            <i class="fas fa-play-circle text-primary-500"></i>
+                                            <div>
+                                                <p class="font-medium text-gray-900 text-sm">Stress Analysis Basics</p>
+                                                <p class="text-gray-600 text-xs">15 min video tutorial</p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <a href="#" class="block p-3 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
+                                        <div class="flex items-center space-x-3">
+                                            <i class="fas fa-book text-success-500"></i>
+                                            <div>
+                                                <p class="font-medium text-gray-900 text-sm">Material Properties Guide</p>
+                                                <p class="text-gray-600 text-xs">Reference documentation</p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <a href="#" class="block p-3 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
+                                        <div class="flex items-center space-x-3">
+                                            <i class="fas fa-calculator text-amber-500"></i>
+                                            <div>
+                                                <p class="font-medium text-gray-900 text-sm">Example Calculations</p>
+                                                <p class="text-gray-600 text-xs">Step-by-step examples</p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- @END_COMPONENT: RecentActivity -->
+                </div>
+
+                <!-- Recent Projects Table -->
+                <div class="mt-8">
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-200">
+                        <div class="p-6 border-b border-gray-200">
+                            <div class="flex items-center justify-between">
+                                <h2 class="text-xl font-semibold text-gray-900">Saved Projects</h2>
+                                <div class="flex items-center space-x-2">
+                                    <button class="text-gray-400 hover:text-gray-600 p-2">
+                                        <i class="fas fa-filter"></i>
+                                    </button>
+                                    <button class="text-gray-400 hover:text-gray-600 p-2">
+                                        <i class="fas fa-download"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full divide-y divide-gray-200">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Project Name</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Material</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Last Modified</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                        <th class="relative px-6 py-3"><span class="sr-only">Actions</span></th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-gray-200" data-mock="true">
+                                    <!-- @MAP: savedProjects.map(project => ( -->
+                                    <tr class="hover:bg-gray-50">
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="flex items-center">
+                                                <div class="flex-shrink-0 h-8 w-8">
+                                                    <div class="h-8 w-8 bg-primary-100 rounded-lg flex items-center justify-center">
+                                                        <i class="fas fa-weight-hanging text-primary-600 text-xs"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="ml-4">
+                                                    <div class="text-sm font-medium text-gray-900" data-bind="project.name">Bridge Support Analysis</div>
+                                                    <div class="text-sm text-gray-500" data-bind="project.description">Structural beam calculation</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900" data-bind="project.type">Stress Analysis</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900" data-bind="project.material">Steel A36</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500" data-bind="project.lastModified">2 days ago</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-success-100 text-success-800">
+                                                Complete
+                                            </span>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                            <div class="flex items-center space-x-2">
+                                                <button class="text-primary-600 hover:text-primary-700">Edit</button>
+                                                <button class="text-gray-400 hover:text-gray-600">
+                                                    <i class="fas fa-ellipsis-h"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr class="hover:bg-gray-50">
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="flex items-center">
+                                                <div class="flex-shrink-0 h-8 w-8">
+                                                    <div class="h-8 w-8 bg-success-100 rounded-lg flex items-center justify-center">
+                                                        <i class="fas fa-arrows-alt-h text-success-600 text-xs"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="ml-4">
+                                                    <div class="text-sm font-medium text-gray-900">Cantilever Beam Study</div>
+                                                    <div class="text-sm text-gray-500">Deflection analysis</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Beam Deflection</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Aluminum 6061</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">5 days ago</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-amber-100 text-amber-800">
+                                                In Progress
+                                            </span>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                            <div class="flex items-center space-x-2">
+                                                <button class="text-primary-600 hover:text-primary-700">Edit</button>
+                                                <button class="text-gray-400 hover:text-gray-600">
+                                                    <i class="fas fa-ellipsis-h"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <!-- @END_MAP )) -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <!-- @END_COMPONENT: MainContent -->
+    </div>
+
+    <script>
+        (function() {
+            // TODO: Implement authentication system
+            // TODO: Implement calculation engine
+            // TODO: Implement data persistence with SQLite
+            // TODO: Implement user profile management
+            // TODO: Implement calculation history
+            // TODO: Implement export functionality
+            
+            // Basic UI interactions
+            document.addEventListener('DOMContentLoaded', function() {
+                // Placeholder for form validation
+                const forms = document.querySelectorAll('form');
+                forms.forEach(form => {
+                    form.addEventListener('submit', function(e) {
+                        e.preventDefault();
+                        // TODO: Implement form validation and submission
+                        console.log('Form submission intercepted for demo');
+                    });
+                });
+
+                // Placeholder for calculation buttons
+                const calculateButtons = document.querySelectorAll('[data-event*="calculate"]');
+                calculateButtons.forEach(button => {
+                    button.addEventListener('click', function() {
+                        // TODO: Implement actual calculation logic
+                        console.log('Calculate button clicked - implement calculation logic');
+                    });
+                });
+
+                // Placeholder for navigation
+                const navLinks = document.querySelectorAll('nav a');
+                navLinks.forEach(link => {
+                    link.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        // TODO: Implement navigation routing
+                        console.log('Navigation clicked:', this.textContent.trim());
+                    });
+                });
+            });
+        })();
+    </script>
+</body>
+</html>
