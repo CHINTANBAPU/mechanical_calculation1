@@ -40,3 +40,8 @@ Run the project locally
 npm start
 Build for production
 npm run build
+👨‍💻 Author
+Developed by chintan gadthadara 
+📧 Email: chintangadthadara@gmail.com
+
+
